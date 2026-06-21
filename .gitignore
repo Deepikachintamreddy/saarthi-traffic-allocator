@@ -1,0 +1,9 @@
+# generated pipeline artifacts (regenerate with: python run_all.py)
+outputs/*.csv
+outputs/*.json
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+.venv/
+venv/
