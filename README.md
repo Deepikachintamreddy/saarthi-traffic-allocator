@@ -16,7 +16,7 @@
 Most conventional traffic management systems forecast **how many** incidents will occur. SAARTHI shifts the paradigm by forecasting **expected congestion-minutes**—a unified physical currency of traffic impact—and then **optimally pre-positions scarce patrol units against it**.
 
 This single, mathematically rigorous framework directly answers the problem statement's core requirements:
-$$\text{Forecast Impact (CIQ)} \longrightarrow \text{Prescribe Manpower \& Barricading} \longrightarrow \text{Learn Dynamically After Every Event}$$
+$$\text{Forecast Impact (CIQ)} \longrightarrow \text{Prescribe Manpower and Barricading} \longrightarrow \text{Learn Dynamically After Every Event}$$
 
 ---
 
