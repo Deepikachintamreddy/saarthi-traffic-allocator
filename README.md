@@ -3,6 +3,12 @@
 ### **Spatio-temporal Allocation, Anomaly & Risk Triage for High-impact Incidents**
 *Gridlock Hackathon 2.0 (Flipkart × Bengaluru Traffic Police) — Theme 2: Event-Driven Congestion (Planned & Unplanned)*
 
+🌐 **Live Console Link**: [saarthi-traffic-allocator.vercel.app](https://saarthi-traffic-allocator.vercel.app/)
+
+> [!IMPORTANT]
+> **Optimized for Desktop (Laptops/PCs)**: The interactive ops console is designed for large-screen monitoring. Please view it on a laptop or PC for the best map visualisations and control experience (not optimized for mobile screens).
+
+
 ---
 
 ## 💡 The Core Thesis

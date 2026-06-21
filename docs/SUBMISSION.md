@@ -131,13 +131,7 @@ Road chokes → divert via ORR West / Magadi Road). This is the PS's third ask �
 ---
 
 ## What the prototype delivers (in this submission)
-- `index.html` — self-contained, **interactive ops console**. Beyond the static
-  views it now includes a **What-if simulator** (pick a planned event — cricket at
-  Chinnaswamy, Metro works, a protest — and the optimizer re-runs *live in the
-  browser* to re-place units for that day), **urgency tiers** colour-coding every
-  recommendation by response cadence (≤15 min / ≤1 hr / standard / pre-positioned),
-  and a derived **cascade total** on spillover-click (e.g. Hosur Road: 103k direct +
-  85k cascaded = 188k total system impact, ×1.82).
+- **[Live Vercel Console](https://saarthi-traffic-allocator.vercel.app/)** *(Optimized for Desktop/Laptops)* — Self-contained, **interactive ops console** (`index.html`). Beyond the static views, it now includes a **What-if simulator** (pick a planned event — cricket at Chinnaswamy, Metro works, a protest — and the optimizer re-runs *live in the browser* to re-place units for that day), **urgency tiers** colour-coding every recommendation by response cadence (≤15 min / ≤1 hr / standard / pre-positioned), and a derived **cascade total** on spillover-click (e.g., Hosur Road: 103k direct + 85k cascaded = 188k total system impact, ×1.82).
 - Pipeline (run in order): `src/1_pipeline.py` → `src/2_models.py` → `src/3_network.py` → `src/4_ops.py` → `src/5_scenarios.py` → `src/6_dashboard.py` (orchestrated end-to-end via `run_all.py`). Each stage writes what the next reads.
 - `dashboard_data.json` and the CSV feeds — clean, machine-readable.
 
