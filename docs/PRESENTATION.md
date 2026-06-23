@@ -2,6 +2,8 @@
 
 This document provides the structured slide-by-slide content, visual layouts, core technical bullet points, and verbatim speaker scripts for presenting **SAARTHI** at the Gridlock Hackathon 2.0. 
 
+All metrics are locked to the final end-to-end execution of the pipeline.
+
 ---
 
 ## 💻 Slide 1: Cover & The Operational Hook
@@ -17,15 +19,18 @@ This document provides the structured slide-by-slide content, visual layouts, co
 
 ---
 
-## 📊 Slide 2: Executive Summary (The Paradigm Shift)
+## 📊 Slide 2: Executive Summary (The Paradigm Shift & Counterfactual Moat)
 *   **Slide Title**: The Core Paradigm Shift: Congestion-Minutes & Supply-Chain Optimization
-*   **Visual Layout**: A simple, bold comparison layout. On the left: "Conventional Systems: Count Events" (red X). On the right: "SAARTHI: Forecast Expected Delay Currency" (green checkmark).
+*   **Visual Layout**: Bold comparison layout. 
+    *   *Left*: "Conventional Systems: Count Events" (red X)
+    *   *Right*: "SAARTHI: Forecast Expected Delay Currency" (green checkmark)
+    *   *Bottom Callout Card*: **Impact Moat**: **21.1% of delays prevented** (468,910 min) under historical back-test.
 *   **Core Bullet Points**:
-    *   **The Currency**: We do not predict incident frequency; we predict **congestion-minutes** (Severity $\times$ Criticality $\times$ Clearance Duration).
+    *   **The Delay Currency**: We do not predict incident frequency; we predict **congestion-minutes** (Severity $\times$ Criticality $\times$ Clearance Duration).
+    *   **Counterfactual Back-Test**: Back-tests patrol allocations against history; pre-positioning prevents **21.1% of delays**, reaching **57.4%** of escalated incidents.
     *   **The Logistics Playbook**: Applies supply-chain fleet optimization to public safety—forecast demand $\rightarrow$ position patrol fleet $\rightarrow$ trigger feedback.
-    *   **Actionable Outputs**: Automatically produces coordinates for patrol anchors, junction barricade points, and spillover-free diversions.
 *   **Speaker Script (30s)**:
-    > *"Most approaches try to forecast the raw count of traffic incidents. SAARTHI shifts this paradigm. We forecast expected 'congestion-minutes'—a single physical currency representing the total cumulative delay an incident will generate. By mapping this risk surface, we can apply supply-chain logistics principles to public safety: predicting traffic demand, pre-positioning the patrol fleet, and closing the loop with nightly updates."*
+    > *"Most approaches try to forecast the raw count of traffic incidents. SAARTHI shifts this paradigm. We forecast expected 'congestion-minutes'—a single physical currency representing cumulative delay. Under historical back-testing, we prove that pre-positioning our patrol fleet would have reached 57% of escalated incidents and prevented 21.1% of all traffic delays—saving nearly 469,000 congestion-minutes."*
 
 ---
 
@@ -36,9 +41,9 @@ This document provides the structured slide-by-slide content, visual layouts, co
     *   *Right Box*: Trap B (Duration Corruption) showing the fake 120–180 minute auto-close duration peak.
 *   **Core Bullet Points**:
     *   **Trap A (Time Jitter)**: Stored incident start times spike artificially at 2 AM due to timezone/batch uploads. SAARTHI discards absolute hours and keys on Day-of-Week (DOW) and coarse Day-Part bins.
-    *   **Trap B (Auto-Close Artifacts)**: $\sim 46\%$ of closed records pile into a synthetic 2–3 hour band due to auto-close scripts. We flag these as right-censored, training models only on trustworthy human-resolved signals.
+    *   **Trap B (Auto-Close Artifacts)**: Nearly half of raw clearance durations pile into a synthetic 2–3 hour band due to auto-close scripts. We flag these entries as right-censored, training models only on trustworthy human-resolved signals.
 *   **Speaker Script (45s)**:
-    > *"A machine learning model is only as good as its data. We identified and defused two massive traps in the Astram log. First, the reporting time is corrupted—showing a fake peak at 2 AM due to timezone tagging and batch uploads. Second, nearly half of all clearance durations are auto-close artifacts. We resolved both: we collapsed absolute hours into Day-Parts to bypass timezone jitter, and treated the auto-close entries as right-censored data so they cannot skew our predictions."*
+    > *"A machine learning model is only as good as its data. We identified and defused two massive traps in the Astram log. First, the reporting time is corrupted—showing a fake peak at 2 AM due to timezone tagging and batch uploads. Second, nearly half of raw durations are auto-close artifacts. We resolved both: we collapsed absolute hours into Day-Parts to bypass timezone jitter, and treated the auto-close entries as right-censored data so they cannot skew our predictions."*
 
 ---
 
@@ -117,12 +122,13 @@ This document provides the structured slide-by-slide content, visual layouts, co
 
 ---
 
-## 🌐 Slide 10: Prototype Demonstration, Impact Audit & Retraining
-*   **Slide Title**: Deployed Prototype, Impact Audit & Walk-Forward Learning
+## 🌐 Slide 10: Prototype Verification, Equity & Retraining
+*   **Slide Title**: Deployed Prototype, Equity Lens & Walk-Forward Retraining
 *   **Visual Layout**: Left: Screenshot of the live Vercel dashboard showing the counterfactual card and equity lens. Right: Retraining weekly capture rate over 13 weeks.
 *   **Core Bullet Points**:
-    *   **Counterfactual Evaluation**: Pushed to [Live Vercel Console](https://saarthi-traffic-allocator.vercel.app/). Pre-positioning prevents **21.1% of historical congestion-minutes** (~469k min), reaching **57.4%** of escalated incidents.
+    *   **The Prototype**: Live on [Vercel](https://saarthi-traffic-allocator.vercel.app/) and fully offline-ready locally.
     *   **Equity Lens**: Exposes the reach gap (**84.6 pts**) between central and peripheral zones.
     *   **Retraining Loop**: Re-fits the model weekly on past logs only; risk capture remains stable at **64.7% mean** over 13 weeks.
+    *   **Limitations (Stated Honestly)**: Spillovers show correlation, not causation; clearance data is sparse; counterfactual assumes a simplified preventable rate.
 *   **Speaker Script (45s)**:
-    > *"Finally, SAARTHI is a live tool deployed at saarthi-traffic-allocator.vercel.app. We back-tested our pre-positioning against history, proving it prevents 21.1% of all congestion-minutes. We built an equity lens that exposes our geographical reach gap of 84.6 points. To ensure the model remains stable, a walk-forward loop re-trains the model weekly, proving that our risk capture remains stable at 64.7% mean as data accumulates. Thank you."*
+    > *"SAARTHI is a live tool deployed at saarthi-traffic-allocator.vercel.app and fully operational offline. We built an equity lens that exposes our geographical reach gap of 84.6 points. To ensure the model remains stable, a walk-forward loop re-trains the model weekly, keeping risk capture stable at 64.7% mean. We state our limits honestly: spillovers show co-occurrence correlation, and the counterfactual assumes a simplified preventable rate. We show our blind spots because credibility matters. Thank you."*
