@@ -1,23 +1,23 @@
-# 🎯 SAARTHI Presentation Slide Deck Outline (11 Slides)
+# 🚦 SAARTHI Pitch Deck: 10-Slide Outline & Script
 
-This document contains a comprehensive, slide-by-slide outline for a **10+ Slide Pitch Deck** (specifically 11 slides) detailing the SAARTHI system. Each slide outline specifies the slide title, recommended visual layout, core bullet points with exact project metrics, and a verbatim speaker script.
+This document provides the structured slide-by-slide content, visual layouts, core technical bullet points, and verbatim speaker scripts for presenting **SAARTHI** at the Gridlock Hackathon 2.0. 
 
 ---
 
-## Slide 1: Cover & The Hook (Project Pitch)
-*   **Slide Title**: SAARTHI — Spatio-temporal Allocation, Anomaly & Risk Triage for High-impact Incidents
-*   **Subtitle**: Event-Driven Traffic Prediction & Resource Optimization Console for Bengaluru Traffic Police (BTP)
+## 💻 Slide 1: Cover & The Operational Hook
+*   **Slide Title**: SAARTHI: Spatio-temporal Allocation, Anomaly & Risk Triage for High-impact Incidents
+*   **Subtitle**: Event-Driven Congestion Console for Bengaluru Traffic Police (BTP)
 *   **Visual Layout**: Dark-themed slide. The left half displays the project title and hackathon metadata. The right half shows a full-screen desktop mockup of the SAARTHI Leaflet map running in dark mode with active heat layers and patrol anchors.
-*   **Core Content**:
+*   **Core Bullet Points**:
     *   **Theme**: Theme 2 — Event-Driven Congestion (Planned & Unplanned)
     *   **Core Delivery**: A lightweight, offline-resilient operations console that predicts, prioritizes, allocates, and learns.
-    *   **Presenter Name**: Deepika Chintamreddy
+    *   **Status**: Fully built prototype with live browser-side simulation.
 *   **Speaker Script (15s)**:
     > *"Good evening, judges. Today, traffic police deployment in Bengaluru is largely experience-driven, and event impacts are not quantified in advance. We built SAARTHI—a complete decision console that predicts traffic risk, quantifies delay in expected congestion-minutes, optimizes patrol and barricading deployment mathematically, and refines itself nightly through an active learning loop."*
 
 ---
 
-## Slide 2: Executive Summary (The Paradigm Shift)
+## 📊 Slide 2: Executive Summary (The Paradigm Shift)
 *   **Slide Title**: The Core Paradigm Shift: Congestion-Minutes & Supply-Chain Optimization
 *   **Visual Layout**: A simple, bold comparison layout. On the left: "Conventional Systems: Count Events" (red X). On the right: "SAARTHI: Forecast Expected Delay Currency" (green checkmark).
 *   **Core Bullet Points**:
@@ -29,7 +29,7 @@ This document contains a comprehensive, slide-by-slide outline for a **10+ Slide
 
 ---
 
-## Slide 3: Data Spine & Defusing Hidden Data Traps
+## 🛡️ Slide 3: Data Integrity: Defusing Hidden Data Traps
 *   **Slide Title**: Data Integrity: Defusing the Dataset Traps
 *   **Visual Layout**: Split layout with warning alerts (`[!WARNING]`). 
     *   *Left Box*: Trap A (Time Corruption) with a bar chart showing the fake 2 AM IST spike.
@@ -42,13 +42,13 @@ This document contains a comprehensive, slide-by-slide outline for a **10+ Slide
 
 ---
 
-## Slide 4: Multi-Modal Impact Quantification (CIQ)
+## ⚙️ Slide 4: Multi-Modal Impact Quantification (CIQ)
 *   **Slide Title**: The CIQ Engine: Congestion-Impact Quantifier
 *   **Visual Layout**: Centered equation layout:
     $$\text{Impact (Minutes)} = \text{Severity Factor} \times \text{Corridor Criticality} \times \text{Expected Clearance Duration}$$
     *   Below the equation, show three KPI callout cards: Severity, Criticality, and Expected Clearance.
 *   **Core Bullet Points**:
-    *   **Severity Factor**: Combines priority (High = 2.0x, Low = 1.0x), closure requests (1.8x), and text signal mined via bilingual NLP (-1 to +1 based on English/Kannada field reports).
+    *   **Severity Factor**: Fuses priority (High = 2.0x, Low = 1.0x), closure requests (1.8x), and text signal mined via bilingual NLP (-1 to +1 based on English/Kannada field reports).
     *   **Corridor Criticality**: Dynamic weighting ($1.0 \text{ to } 2.0$) measuring the historical share of severe/closure events on each corridor.
     *   **Expected Clearance**: Expected duration predicted per incident cause.
 *   **Speaker Script (30s)**:
@@ -56,19 +56,19 @@ This document contains a comprehensive, slide-by-slide outline for a **10+ Slide
 
 ---
 
-## Slide 5: Spatio-Temporal Risk Surface Forecasting
+## 📈 Slide 5: Spatio-Temporal Risk Surface Forecasting
 *   **Slide Title**: Mapping the City's Risk Surface
 *   **Visual Layout**: Left: Risk surface heatmap displaying high-density hot zones in Bengaluru. Right: Validation metrics.
 *   **Core Bullet Points**:
     *   **Grid Panel Model**: Aggregates the city into a spatial grid of 241 cells ($~1.3\text{ km}$ resolution) tracked across DOW and Day-Parts.
     *   **Risk Model**: Uses a `HistGradientBoostingRegressor` to predict expected daily congestion-minutes per cell.
-    *   **Strict Time Validation**: Evaluated on 30 completely unseen days. The top 20% highest-risk cells capture **67.8%** of all actual next-month congestion-minutes (outperforming the cell-mean baseline of 66.1%).
+    *   **Strict Time Validation**: Evaluated on 30 completely unseen days. The top 20% highest-risk cells capture **67.5%** of all actual next-month congestion-minutes (outperforming the cell-mean baseline of 66.1%).
 *   **Speaker Script (45s)**:
-    > *"Our predictive core models the city as a spatio-temporal panel. We segment Bengaluru into 241 cells and train a Histogram Gradient Boosting Regressor to predict the expected daily congestion-minutes for every cell. Validated on 30 completely unseen days, deploying to the top 20% of cells flagged by our model captures 67.8% of the next month's real congestion, outperforming static historical baselines."*
+    > *"Our predictive core models the city as a spatio-temporal panel. We segment Bengaluru into 241 cells and train a Histogram Gradient Boosting Regressor to predict the expected daily congestion-minutes for every cell. Validated on 30 completely unseen days, deploying to the top 20% of cells flagged by our model captures 67.5% of the next month's real congestion, outperforming static historical baselines."*
 
 ---
 
-## Slide 6: Clearance Time Prediction (Quantile Models)
+## ⏱️ Slide 6: Clearance Time Prediction (Quantile Models)
 *   **Slide Title**: Quantile Models for Patrol Unit Commitment Time
 *   **Visuals**: A horizontal bar chart showing P50 (typical) vs. P90 (worst-case) clearance hold times by cause (Protest: 142m / 396m; Public Event: 112m / 332m; Construction: 43m / 315m; Tree Fall: 20m / 296m).
 *   **Core Bullet Points**:
@@ -80,45 +80,19 @@ This document contains a comprehensive, slide-by-slide outline for a **10+ Slide
 
 ---
 
-## Slide 7: Prescriptive Patrol Pre-Positioning
-*   **Slide Title**: Patrol Pre-Positioning: Mathematical Allocation
+## 📍 Slide 7: Prescriptive Patrol Pre-Positioning & Sizing
+*   **Slide Title**: Patrol Pre-Positioning: Location-Allocation & Manpower Sizing
 *   **Visual Layout**: Left: Leaflet map view showing optimized unit locations (teal dots 1–8) with their 2.5 km coverage radii. Right: Allocation rules.
 *   **Core Bullet Points**:
     *   **Greedy Max-Coverage**: Solves the location-allocation problem. Selects $K$ coordinates that cover the maximum expected congestion-minutes.
     *   **Spatial Constraints**: Units are restricted to a maximum reach of 2.5 km and enforced with a minimum separation of 1.8 km to prevent redundant stacking.
-    *   **Adaptive Scheduling**: Automatically generates different, optimized patrol coordinates for each day of the week based on changing risk patterns.
+    *   **Sizing Curve**: Shows the exact coverage curve (6 units $\rightarrow$ 50% coverage, 10 units $\rightarrow$ 70%, 14 units $\rightarrow$ 80% coverage).
 *   **Speaker Script (45s)**:
-    > *"To allocate manpower, we solve a greedy max-coverage location-allocation problem. The model determines the optimal coordinates for $K$ patrol anchors to cover the maximum predicted risk. We enforce a 2.5 km operational reach and a 1.8 km separation constraint to ensure units are spread out. The console automatically generates different, day-specific coordinates for every day of the week."*
+    > *"To allocate manpower, we solve a greedy max-coverage location-allocation problem. The model determines the optimal coordinates for $K$ patrol anchors to cover the maximum predicted risk. We enforce a 2.5 km operational reach and a 1.8 km separation constraint to ensure units are spread out. Crucially, we build a resource sizing curve: 6 units capture 50% of congestion-minutes, 10 units cover 70%, and 14 units hit 80%."*
 
 ---
 
-## Slide 8: Resource-Coverage Curves (Manpower Sizing)
-*   **Slide Title**: The Marginal Resource-Coverage Curve
-*   **Visual Layout**: A line chart mapping the number of patrol units ($X$-axis, 1 to 15) against the cumulative percentage of congestion-minutes covered ($Y$-axis, 0% to 100%).
-*   **Core Bullet Points**:
-    *   **Data-Driven Staffing**: Quantifies the marginal returns of adding more patrol vehicles.
-    *   **Key Threshold Metrics**:
-        *   **6 units** capture **50%** of expected daily congestion.
-        *   **10 units** capture **70%** of expected daily congestion.
-        *   **14 units** capture **80%** of expected daily congestion.
-    *   **Command Tool**: Allows BTP to mathematically size the dispatch force to meet a specific coverage target.
-*   **Speaker Script (40s)**:
-    > *"BTP commanders often ask: 'How many units do we need?' We answer this with our Marginal Resource-Coverage Curve. The math shows distinct thresholds: 6 units capture 50% of the city's expected event-driven delay, 10 units cover 70%, and 14 units hit 80%. This curve removes guesswork, allowing BTP to size their deployment based on real statistical coverage targets."*
-
----
-
-## Slide 9: Barricading & Safe-Radius Diversion Plans
-*   **Slide Title**: Precision Barricading & Spillover-Free Diversions
-*   **Visual Layout**: Screenshot of the "Barricading plan" card showing junctions, barricade counts, and recommended diversion routes next to the Leaflet map overlay.
-*   **Core Bullet Points**:
-    *   **Barricade Recommender**: Clusters road-closure segment approaches into persistent zones. Recommends exact locations (e.g., K R Circle, K R Market) and barricade counts (2–4 points).
-    *   **Spillover-Free Diversion**: Finds the nearest parallel corridors (e.g., ORR West, Magadi Road) while mathematically filtering out roads inside the incident's cascade blast radius.
-*   **Speaker Script (40s)**:
-    > *"When road closures are required, SAARTHI automatically recommends precision barricading and diversion plans. It clusters segment approaches to recommend physical barricading points at named junctions. It then identifies parallel diversion corridors. Crucially, the system checks our cascade network to ensure recommended diversions direct traffic onto roads that are safe from spillover."*
-
----
-
-## Slide 10: Corridor Spillover Cascade Network
+## ⛓️ Slide 8: Corridor Spillover Cascade Networks & Diversions
 *   **Slide Title**: Mined Corridor Spillovers & Cascading Impact
 *   **Visual Layout**: A directed network graph showing corridors (nodes) and spillover probabilities (edges). Highlight Hosur Road pointing to IRR/Thanisandra.
 *   **Core Bullet Points**:
@@ -130,12 +104,25 @@ This document contains a comprehensive, slide-by-slide outline for a **10+ Slide
 
 ---
 
-## Slide 11: Alarms, Live What-If Simulator & Learning Loops
-*   **Slide Title**: Live What-If Simulation & Nightly Learning Loops
-*   **Visual Layout**: Left: UI screenshot of the browser-side What-If event select dropdown, the K-slider, and the custom event pin-drop. Right: Learning curve showing weekly capture rate over 13 weeks.
+## 🚧 Slide 9: Precision Barricading & Emerging-Event Alarms
+*   **Slide Title**: Precision Barricading & Spatio-Temporal Burst Alarms
+*   **Visual Layout**: Split layout.
+    *   *Left Box*: Ranked list of barricade locations showing approaches, junctions, and points.
+    *   *Right Box*: Alarm log catching the March 7 rain flooding event in real time.
 *   **Core Bullet Points**:
-    *   **Live Browser Re-optimization**: Users can adjust the $K$-slider or drop a custom event pin anywhere on the Leaflet map; the greedy optimizer re-runs live in JS.
-    *   **Spatio-Temporal Burst Alarm**: Detects unplanned gatherings ($\ge 4$ incidents in 1.5 km / 90 min) while filtering out batch survey logs.
-    *   **Post-Event Learning Loop**: Simulates walk-forward weekly retraining. Average capture rate holds stable at **64.8%** over 13 weeks.
+    *   **Barricade Recommender**: Clusters segment approaches into ranked barricade zones. Recommends exact junctions (K R Circle, Police Corner, K R Market), point counts (2–4), and parallel diversion routes.
+    *   **Emerging-Event Alarm**: spatial burst scanner ($\ge 4$ incidents in 1.5 km / 90 min). Caught the March 7 city-wide rain flooding bursts live.
+*   **Speaker Script (40s)**:
+    > *"For closures, SAARTHI clusters historical segment approaches into persistent barricade zones. It recommends the exact named junction—like K R Circle or K R Market—and the number of physical barricade points. For unplanned events, we run an emerging-event spatial burst scanner. It flags clusters of 4 or more incidents within a 90-minute window, which successfully caught the March 7 rain flooding live."*
+
+---
+
+## 🌐 Slide 10: Prototype Demonstration, Impact Audit & Retraining
+*   **Slide Title**: Deployed Prototype, Impact Audit & Walk-Forward Learning
+*   **Visual Layout**: Left: Screenshot of the live Vercel dashboard showing the counterfactual card and equity lens. Right: Retraining weekly capture rate over 13 weeks.
+*   **Core Bullet Points**:
+    *   **Counterfactual Evaluation**: Pushed to [Live Vercel Console](https://saarthi-traffic-allocator.vercel.app/). Pre-positioning prevents **21.1% of historical congestion-minutes** (~469k min), reaching **57.4%** of escalated incidents.
+    *   **Equity Lens**: Exposes the reach gap (**84.6 pts**) between central and peripheral zones.
+    *   **Retraining Loop**: Re-fits the model weekly on past logs only; risk capture remains stable at **64.7% mean** over 13 weeks.
 *   **Speaker Script (45s)**:
-    > *"Finally, SAARTHI is a live tool. In our console, a commander can drag the available units slider or drop a custom pin on the map. The Leaflet map runs our greedy optimizer live in JavaScript to instantly update coordinates. To close the loop, we implement a walk-forward learning loop: the model re-fits weekly on past logs and predicts the next week, proving in code that our risk capture holds stable at 65% as data accumulates."*
+    > *"Finally, SAARTHI is a live tool deployed at saarthi-traffic-allocator.vercel.app. We back-tested our pre-positioning against history, proving it prevents 21.1% of all congestion-minutes. We built an equity lens that exposes our geographical reach gap of 84.6 points. To ensure the model remains stable, a walk-forward loop re-trains the model weekly, proving that our risk capture remains stable at 64.7% mean as data accumulates. Thank you."*
