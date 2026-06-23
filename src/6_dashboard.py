@@ -105,6 +105,7 @@ aside{grid-column:2;grid-row:2;background:var(--panel2);border-left:1px solid va
    <div class="kpi"><div class="v" id="k_inc">—</div><div class="l">Incidents analysed</div></div>
    <div class="kpi"><div class="v amber" id="k_cm">—</div><div class="l">Congestion-min mapped</div></div>
    <div class="kpi"><div class="v teal" id="k_cap">—</div><div class="l">Risk capture @top20%</div></div>
+   <div class="kpi"><div class="v teal" id="k_prev">—</div><div class="l">Congestion preventable</div></div>
   </div>
  </header>
 
@@ -132,6 +133,7 @@ aside{grid-column:2;grid-row:2;background:var(--panel2);border-left:1px solid va
     <div class="tg on" id="tHeat">Risk heat</div><div class="tg on" id="tUnit">Units</div>
     <div class="tg on" id="tHot">Hotspots</div><div class="tg" id="tBarr">Barricades</div>
     <div class="tg" id="tNet">Spillover</div>
+    <div class="tg" id="tBlind">Blind spots</div>
    </div>
    <div class="legend"><span>low</span><div class="ramp"></div><span>high</span></div>
    <div class="hint">Pick an event above to re-optimise the deployment live. Or open
@@ -140,6 +142,14 @@ aside{grid-column:2;grid-row:2;background:var(--panel2);border-left:1px solid va
  </div>
 
  <aside>
+  <div class="card" style="background:linear-gradient(135deg,rgba(45,212,191,.1),rgba(245,165,36,.05));border:1px solid rgba(45,212,191,.35)">
+   <h2><span class="dot" style="background:var(--teal)"></span>Would it have helped?<span class="tagy">counterfactual</span></h2>
+   <div class="sub">We don't just predict — we back-test the plan against history. If SAARTHI's units had been pre-positioned, how much congestion was preventable?</div>
+   <div id="cfact"></div>
+   <div class="sub" style="margin:10px 0 5px">Reach equity — central zones hog coverage; periphery is starved. We surface it, not hide it.</div>
+   <div id="equity"></div>
+   <div id="auditNote" class="sub" style="margin-top:9px;color:var(--muted)"></div>
+  </div>
   <div class="card">
    <h2><span class="dot" style="background:var(--barr)"></span>Barricading plan<span class="tagy">PS ask ✓</span></h2>
    <div class="sub">Where to physically place barricades for closures — real approaches + junctions, with the diversion to turn traffic onto. Dot = response urgency.</div>
@@ -194,6 +204,7 @@ const TC={red:'#ff5d5d',amber:'#ffb84d',std:'#8294ae',green:'#34d399'};
 document.getElementById('k_inc').textContent=fmt(D.meta.incidents);
 document.getElementById('k_cm').textContent=(D.meta.total_congestion_minutes/1e6).toFixed(2)+'M';
 document.getElementById('k_cap').textContent=D.risk_metrics.capture_top20pct_model+'%';
+document.getElementById('k_prev').textContent=D.counterfactual.prevented_pct+'%';
 
 const map=L.map('map',{zoomControl:false,attributionControl:false}).setView([12.97,77.62],11);
 L.control.zoom({position:'bottomright'}).addTo(map);
@@ -210,7 +221,7 @@ function heatColor(v){const t=Math.min(1,v/heatMax);
  const i=Math.min(2,Math.floor(t*3)),f=t*3-i,a=s[i],b=s[i+1];
  return`rgb(${a[0]+(b[0]-a[0])*f|0},${a[1]+(b[1]-a[1])*f|0},${a[2]+(b[2]-a[2])*f|0})`;}
 let heatLayer=L.layerGroup(),hotLayer=L.layerGroup(),unitLayer=L.layerGroup(),
-    netLayer=L.layerGroup(),barrLayer=L.layerGroup(),evtLayer=L.layerGroup();
+    netLayer=L.layerGroup(),barrLayer=L.layerGroup(),evtLayer=L.layerGroup(),blindLayer=L.layerGroup();
 D.heat.forEach(h=>{const t=Math.min(1,h.exp_impact/heatMax);
  L.circle([h.lat,h.lon],{radius:380+Math.sqrt(h.exp_impact)*30,color:heatColor(h.exp_impact),
   weight:0,fillColor:heatColor(h.exp_impact),fillOpacity:0.18+0.32*t}).addTo(heatLayer);});
@@ -353,9 +364,39 @@ function tog(id,layer,onAdd){const el=document.getElementById(id);el.onclick=()=
  if(el.classList.contains('on')){layer.addTo(map);onAdd&&onAdd();}else map.removeLayer(layer);};}
 tog('tHeat',heatLayer);tog('tHot',hotLayer);tog('tUnit',unitLayer);tog('tBarr',barrLayer);
 tog('tNet',netLayer,()=>{if(netLayer.getLayers().length===0)drawArcs('Hosur Road');});
+tog('tBlind',blindLayer);
 
 // rails
 const tierOf=c=>D.urgency.tier[c]||'std';
+// ---- proven-impact card: counterfactual + equity + confidence ----
+(function(){
+ const c=D.counterfactual;
+ document.getElementById('cfact').innerHTML=
+  `<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+    <span style="font-family:Archivo;font-weight:900;font-size:30px;color:var(--teal);line-height:1">${c.prevented_pct}%</span>
+    <span style="font-size:11px;color:var(--muted);line-height:1.3">of congestion-minutes preventable<br>(${fmt(c.prevented_congestion_min)} min) by pre-positioning</span></div>
+   <div class="row"><div class="name">Incidents reached (≤${c.reach_km} km)</div><span class="pill t">${c.reach_pct}%</span></div>
+   <div class="row"><div class="name">High-impact incidents reached</div><span class="pill t">${c.esc_reach_pct}%</span></div>`;
+ const eq=D.equity, mx=Math.max(...eq.zones.map(z=>z.reached_pct));
+ const eEl=document.getElementById('equity');
+ eq.zones.slice(0,3).concat(eq.zones.slice(-1)).forEach(z=>{const r=document.createElement('div');r.className='row';
+  const col=z.reached_pct<20?'var(--red)':z.reached_pct<50?'var(--amber)':'var(--teal)';
+  r.innerHTML=`<div class="name" style="flex:1">${z.zone}
+   <div class="bar"><i style="width:${100*z.reached_pct/mx}%;background:${col}"></i></div></div>
+   <span class="pill" style="color:${col};margin-left:8px">${z.reached_pct}%</span>`;eEl.appendChild(r);});
+ const small=document.createElement('div');small.className='sub';small.style.marginTop='7px';
+ small.innerHTML=`Reach gap <b style="color:var(--red)">${eq.gap_pct} pts</b> between best & worst zone. ${eq.note}`;
+ eEl.appendChild(small);
+ const a=D.confidence_audit;
+ document.getElementById('auditNote').innerHTML=
+  `<b style="color:var(--saffron2)">Self-audit:</b> median forecast confidence ${a.median_confidence}/100;
+   ${a.low_confidence_cells.length} low-confidence zones flagged on the map (toggle “Blind spots”). ${a.note}`;
+ // low-confidence map layer
+ a.low_confidence_cells.forEach(cc=>{L.circleMarker([cc.lat,cc.lon],{radius:9,color:'#ff5d5d',weight:1.5,
+   dashArray:'3 3',fill:false}).bindTooltip(`low confidence (${cc.confidence}/100, ${cc.incidents} incidents)`,
+   {direction:'top'}).addTo(blindLayer);});
+})();
+
 const barrEl=document.getElementById('barr');
 D.barricading.slice(0,5).forEach(b=>{const tcause=b.causes.split(',')[0].trim();const r=document.createElement('div');
  r.className='row';r.style.cursor='pointer';r.onclick=()=>{document.getElementById('tBarr').classList.add('on');

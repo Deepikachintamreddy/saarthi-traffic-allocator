@@ -5,7 +5,11 @@
 ---
 
 ## The one-line thesis
-SAARTHI forecasts **expected congestion-minutes** — a unified physical currency — and then **optimally pre-positions scarce enforcement units against it**. This single framework directly answers all three of the problem statement's asks: forecast impact → recommend manpower / barricading / diversion → learn dynamically after every event.
+Most teams will forecast *how many* events happen. We forecast **expected
+congestion-minutes** — one physical currency — and then **optimally pre-position
+scarce enforcement units against it**. That single reframe answers all three of the
+problem statement's asks in one system: forecast impact → recommend manpower /
+barricading / diversion → learn after every event.
 
 ---
 
@@ -46,7 +50,8 @@ batch auto-close that piles "durations" into a fake 2–3 hour band. The obvious
 "average clearance time" feature is therefore an artifact. We **flag those rows as
 right-censored** and learn clearance time only from the trustworthy signal.
 
-Addressing these data anomalies is critical: a model trained on raw uncorrected fields learns timezone jitter and auto-close artifacts, yielding inaccurate forecasts.
+Catching these is the credibility kill-shot: teams that miss them will present
+confident models trained on garbage.
 
 ---
 
@@ -69,26 +74,28 @@ Addressing these data anomalies is critical: a model trained on raw uncorrected 
    day-of-week predicts the expected congestion-minute surface. Validated by the
    metric that actually matters operationally — **capture rate: deploy to the top
    20% of cells and catch 68.7% of the next month's real congestion-minutes**
-   on unseen days.
+   (vs 66.1% baseline), on unseen days.
 
 5. **Planned-event track.** Parses field reports into archetypes (Metro works,
    cricket/IPL at Chinnaswamy, religious processions, NHAI/BWSSB closures, VIP, rally)
-   → a deterministic impact calendar. Operational Finding:
-**Metro construction represents the highest-impact planned archetype (1,247 congestion-min median), exceeding Chinnaswamy stadium sports events.**
+   → a deterministic impact calendar. Counterintuitive finding judges remember:
+   **Metro construction is the single highest-impact planned archetype (1,247
+   congestion-min median) — louder than cricket.**
 
 6. **Pre-positioning optimizer.** Greedy max-coverage places K patrol anchors to
    maximise covered congestion-minutes. Headline: **8 anchors cover ~61–65% of
-   expected congestion-minutes per day** — an efficient resource allocation result, with a
+   expected congestion-minutes per day** — a real "do more with less" result, with a
    distinct plan for every day of the week.
 
-7. **Corridor spillover network + diversion recommender.** We mine the
+7. **Corridor spillover network + diversion recommender (the moat).** We mine the
    log for *propagation*: an incident on corridor A triggering a follow-on on a
    nearby corridor B within 90 min. This yields a directed cascade graph — e.g.
    **Hosur Road → IRR/Thanisandra fires at 28× chance (167 observed cascades)**,
    ORR North 1 → Hennur at 17×. For any choked corridor we then recommend reroutes
    onto the nearest *parallel* corridors that are **not** in its blast radius (Mysore
-Road chokes → divert via ORR West / Magadi Road). This is the PS's third ask —
-"diversion plans" — solved on the road network, not as points on a map. This network-aware approach yields far more practical routes.
+   Road chokes → divert via ORR West / Magadi Road). This is the PS's third ask —
+   "diversion plans" — solved on the road network, not as points on a map. No
+   points-only approach can produce it.
 
 8. **Marginal coverage curve.** Answers the resource question directly: **6 units →
    50%, 10 → 70%, 14 → 80%** of expected congestion-minutes. Lets BTP size the
@@ -112,7 +119,7 @@ Road chokes → divert via ORR West / Magadi Road). This is the PS's third ask �
    weeks the capture@20% rises and holds — **60.6% → 69.0%, mean 64.9%** — proving
    the nightly re-fit generalises and isn't overfit. The same routine is the
    operational nightly update: ingest the day's incidents → re-fit → emit a fresh
-   plan. This walk-forward learning loop is fully implemented and operational in code.
+   plan. (Earlier drafts *claimed* this without code; it is now real.)
 
 12. **Sudden-gathering / emerging-event alarm.** A spatio-temporal scan flags
    ≥4 incidents within 1.5 km / 90 min — the live signature of a forming crowd or
@@ -124,28 +131,37 @@ Road chokes → divert via ORR West / Magadi Road). This is the PS's third ask �
 
 ---
 
-## Operational & Strategic Value
-- **Bengaluru Traffic Police (BTP)**: Receives a deployable decision tool for unplanned and planned events. Commanders can view the active risk surface, obtain optimal patrol allocations, estimate clearance hold times, and let the model automatically refine itself nightly as new data accumulates.
-- **Strategic Value (Manpower & Logistics)**: Applies supply-chain optimization principles (demand forecasting → fleet positioning → feedback loops) to public safety, creating a highly efficient resource allocation engine.
+## Why this wins both judging rooms
+- **BTP** gets a deployable decision tool for their hardest unscripted problem:
+  *open console → see today's risk surface → get a recommended 8-unit plan + hold
+  times → after the event, the model refines itself.*
+- **Flipkart** recognises its own playbook: forecast demand → position fleet →
+  optimise → feedback. The OR pre-positioning layer is engineering they respect and
+  that no solo competitor will build.
 
 ---
 
 ## What the prototype delivers (in this submission)
-- **[Live Vercel Console](https://saarthi-traffic-allocator.vercel.app/)** *(Optimized for Desktop/Laptops)* — Self-contained, **interactive ops console** (`index.html`). Beyond the static views, it now includes a **What-if simulator** (pick a planned event — cricket at Chinnaswamy, Metro works, a protest — and the optimizer re-runs *live in the browser* to re-place units for that day), **urgency tiers** colour-coding every recommendation by response cadence (≤15 min / ≤1 hr / standard / pre-positioned), and a derived **cascade total** on spillover-click (e.g., Hosur Road: 103k direct + 85k cascaded = 188k total system impact, ×1.82).
-- Pipeline (run in order): `src/1_pipeline.py` → `src/2_models.py` → `src/3_network.py` → `src/4_ops.py` → `src/5_scenarios.py` → `src/6_dashboard.py` (orchestrated end-to-end via `run_all.py`). Each stage writes what the next reads.
+- **[Live Vercel Console](https://saarthi-traffic-allocator.vercel.app/)** *(Optimized for Desktop/Laptops)* — Self-contained, **interactive ops console** (`index.html`). Beyond the static views, it now includes a **What-if simulator** (pick a planned event — cricket at Chinnaswamy, Metro works, a protest — and the optimizer re-runs *live in the browser* to re-place units for that day), **urgency tiers** colour-coding every recommendation by response cadence (≤15 min / ≤1 hr / standard / pre-positioned), and a derived **cascade total** on spillover-click (e.g. Hosur Road: 103k direct + 85k cascaded = 188k total system impact, ×1.82).
+- Pipeline (run in order): `src/1_pipeline.py` → `src/2_models.py` → `src/3_network.py` → `src/4_ops.py` → `src/5_scenarios.py` → `src/5b_impact.py` → `src/6_dashboard.py` (orchestrated end-to-end via `run_all.py`). Each stage writes what the next reads.
 - `dashboard_data.json` and the CSV feeds — clean, machine-readable.
 
 ---
 
 ## 90-second demo script
-1. **Hook (15s):** "Bengaluru's traffic police historically deploy resources based on experience. We turned this raw incident log into a data-driven deployment console — but first we had to defuse two hidden data traps that would distort standard forecasting models." *(point at the 2 AM peak / fake-duration callout)*
+1. **Hook (15s):** "Bengaluru's traffic police deploy by gut feel. We turned this
+   raw incident log into a deployment console — but first we had to defuse two traps
+   that would have sunk a naive model." *(point at the 2 AM peak / fake-duration callout)*
 2. **Currency (15s):** "We don't count events. We measure **congestion-minutes** —
    2.55 million of them mapped across the city." *(KPI strip)*
 3. **The map (25s):** "This heat surface is a validated forecast — its top 20% of
    cells capture **69% of next month's real congestion**. The teal numbered pins are
    our recommended 8-unit deployment. Switch the day…" *(click Sun → coverage
    recomputes live)* "…and the plan re-optimises. Eight anchors, ~64% coverage."
-4. **Diversion (20s):** "Turn on the spillover net and click Hosur Road. The data shows it cascades into Thanisandra at **28× normal odds** — so we recommend routing traffic around the blast radius. This represents a network-aware diversion plan rather than simple points on a map."
+4. **Diversion — the moat (20s):** "Turn on the spillover net and click Hosur
+   Road. The data shows it cascades into Thanisandra at **28× normal odds** — so we
+   route traffic *green*, around the blast radius. That's a diversion plan no
+   points-on-a-map model can produce."
 5. **Hold time + anomaly (15s):** "Each unit gets a hold time — a protest 6+ hours,
    a pothole 7 minutes. And our anomaly detector flagged April 3rd as abnormal —
    there was a festival that day. The system sees unannounced events early."
