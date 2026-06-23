@@ -7,3 +7,4 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
+docs/DEMO_SCRIPT.md
