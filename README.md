@@ -115,7 +115,8 @@ flowchart LR
     C --> D[3 · Network<br/>spillover + diversion + coverage curve + anomaly]
     D --> E[4 · Ops<br/>barricading + walk-forward learning + gathering alarm]
     E --> F[5 · Scenarios<br/>what-if + cascade totals + urgency tiers]
-    F --> G[6 · Dashboard<br/>interactive ops console → index.html]
+    F --> G[5b · Impact<br/>counterfactual + equity lens + self-audit]
+    G --> H[6 · Dashboard<br/>interactive ops console → index.html]
 ```
 
 Each stage writes a JSON/CSV feed that the next stage reads; the final stage renders a
@@ -164,6 +165,7 @@ saarthi/
 │   ├── 3_network.py        # spillover cascade + diversion + coverage curve + anomaly
 │   ├── 4_ops.py            # barricading + walk-forward learning + gathering alarm
 │   ├── 5_scenarios.py      # what-if simulator feed + cascade totals + urgency tiers
+│   ├── 5b_impact.py        # counterfactual + equity lens + confidence self-audit
 │   └── 6_dashboard.py      # builds index.html from the JSON feed
 ├── outputs/                # generated feeds (git-ignored; regenerate with run_all.py)
 ├── assets/
