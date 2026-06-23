@@ -6,7 +6,7 @@
 > forecasts congestion, sizes and places the force, recommends barricading & diversion,
 > and learns after every event.
 
-*Gridlock Hackathon 2.0 (Flipkart × Bengaluru Traffic Police) — Theme 2: Event-Driven Congestion (Planned & Unplanned). Built by **Team A2K**.*
+*Gridlock Hackathon 2.0 (Flipkart × Bengaluru Traffic Police) — Theme 2: Event-Driven Congestion (Planned & Unplanned).*
 
 🌐 **Live Console Link**: [saarthi-traffic-allocator.vercel.app](https://saarthi-traffic-allocator.vercel.app/)
 
@@ -211,9 +211,8 @@ JS/SVG (no framework, fully self-contained console).
 
 ---
 
-## Team
+## Hackathon & Dataset
 
-**Team A2K** — Gridlock Hackathon 2.0, Flipkart × Bengaluru Traffic Police.
-
-Dataset © Bengaluru Traffic Police (Astram), provided anonymized for the hackathon.
-Code released under the MIT License.
+* **Event**: Gridlock Hackathon 2.0, Flipkart × Bengaluru Traffic Police.
+* **Dataset**: © Bengaluru Traffic Police (Astram), provided anonymized for the hackathon.
+* **License**: Released under the MIT License.
